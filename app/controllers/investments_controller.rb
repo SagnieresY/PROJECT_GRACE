@@ -1,8 +1,8 @@
 class InvestmentsController < ApplicationController
   def index
     @fuck_off_pundit = policy_scope(Investment)
-    @investments = current_user.foundation.ongoing_investments
-    authorize @investments
+    @investments = current_user.foundation.investments
+    authorize current_user.foundation.investments.first
 
     #foundation projects where they have investments
         #total funding with projects
