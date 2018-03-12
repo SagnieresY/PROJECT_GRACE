@@ -3,6 +3,7 @@
 
 <%= content_for(:after_js) do %>
 <script type="text/javascript">
+
   var ctx = document.getElementById('myChart').getContext('2d');
   var chart = new Chart(ctx, {
     // The type of chart we want to create
@@ -145,6 +146,19 @@ var lineChart = new Chart(ctx2, {
         }
     }
 });
+function reloadCharts() {
+  <% @projects_by_focus_area = current_user.foundation.projects_by_focus_area.map do |focus_area, projects| %>
+      <% [focus_area,projects.map(&:total_funding).reduce(0,:+)] %>
+    <% end %>
+    <% @projects_by_focus_area = @projects_by_focus_area.to_h %>
 
+  chart.data.datasets[0].data = <%= raw @projects_by_focus_area.values %> ;
+  chart.update();
+
+   <% @investments_by_month_locked_cummulative = current_user.foundation.cummulative_locked_amount_investment_by_milestones_deadline_month  %>
+    <% @investments_by_month_unlocked_cummulative = current_user.foundation.cummulative_unlocked_amount_investment_by_milestones_deadline_month  %>
+  lineChart.data.datasets[0].data = <%= raw @investments_by_month_unlocked_cummulative.values %>
+  lineChart.update();
+}
 </script>
 <% end %>

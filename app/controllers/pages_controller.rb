@@ -27,7 +27,9 @@ class PagesController < ApplicationController
       #last milestone unlocked
       #trust worthy level (dependent on milestones unlocked?)
   end
-
+  def charts
+    render partial: 'partials/charts'
+  end
   def no_foundation
 
   end
