@@ -108,7 +108,10 @@ var lineChart = new Chart(ctx2, {
             data: <%= raw @investments_by_month_locked_cummulative.values %>,
         }]
     },
-
+     scaleOverride : true,
+        scaleSteps : 10,
+        scaleStepWidth : 50,
+        scaleStartValue : 0,
     // Configuration options go here
     options: {
       responsive: false,
@@ -130,17 +133,11 @@ var lineChart = new Chart(ctx2, {
                         color: "rgba(0, 0, 0, 0)",
                     },
                     ticks: {
+                      beginAtZero:true,
+                      max: <%= raw current_user.foundation.total_forecasted_amount %>
                             // Return an empty string to draw the tick line but hide the tick label
                             // Return `null` or `undefined` to hide the tick line entirely
-                            userCallback: function(value, index, values) {
-                                // Convert the number to a string and splite the string every 3 charaters from the end
-                                value = value.toString();
-                                value = value.split(/(?=(?:...)*$)/);
 
-                                // Convert the array to a string and format the output
-                                value = value.join(',');
-                                return '$' + value;
-                                }
                             }
                         }]
         }

@@ -14,7 +14,7 @@ class Foundation < ApplicationRecord
   end
 
   def total_forecasted_amount
-    projects.map(&:total_funding).reduce(0,:+)
+    milestones.map(&:amount).reduce(0,:+)
   end
 
   def projects_by_focus_area
